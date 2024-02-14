@@ -5,16 +5,14 @@ RICORDELLA
 4. Si potranno creare nuove note, modificare e cancellare le esistenti e indicarle come completate.
 5. Ogni nota dovrà avere un campo indicante la data di creazione, un campo indicante la data
 di modifica e un campo testo molto ampio per la nota stessa.
-6. L’applicazione dovrà essere utilizzabile dal link http://cognome.bearzi.info/ricordella.
+6. L’applicazione dovrà essere utilizzabile dal link http://brugnola.bearzi.info/ricordella.
 7. Dovrà essere fornito un utente demo con password per provare il sistema.
-8. Dovrà essere presente un repository git e il link per l’accesso dovrà essere concesso all’utente vittore@zen.pn.it.
+8. Dovrà essere presente un repository git e il link per l’accesso dovrà essere concesso all’utente Vittore Zen.
 9. Nel repository git dovranno essere presenti almeno 3 commit per ogni componente del gruppo.
 10. Prima di iniziare la scrittura del codice dovranno essere disegnati i wireframe. Faranno testo i dati salvati nel repository git:
   a) Creare una cartella docs e la sottocartella docs/wireframe dove verranno salvati i file dei wireframe.
-  b) I wireframe dovranno essere realizzati utilizzando https://draw.io e dovranno essere
-  presenti nella cartella docs/wireframe.
-  c) Un file pdf comprensivo di tutti i wireframe sarà salvato con nome _all.pdf nella cartella
-  docs/wireframe.
+  b) I wireframe dovranno essere realizzati utilizzando https://draw.io e dovranno essere presenti nella cartella docs/wireframe.
+  c) Un file pdf comprensivo di tutti i wireframe sarà salvato con nome _all.pdf nella cartella docs/wireframe.
   d) Termine ultimo di consegna 6 marzo 2024 - ore 06:00
 
 Richieste opzionali
