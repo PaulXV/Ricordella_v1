@@ -7,7 +7,7 @@ RICORDELLA
 di modifica e un campo testo molto ampio per la nota stessa.
 6. L’applicazione dovrà essere utilizzabile dal link http://brugnola.bearzi.info/ricordella.
 7. Dovrà essere fornito un utente demo con password per provare il sistema.
-8. Dovrà essere presente un repository git e il link per l’accesso dovrà essere concesso all’utente Vittore Zen.
+8. Dovrà essere presente un repository git e il link per l’accesso dovrà essere concesso all’utente Vittore Zen. (user: zen, password: admin)
 9. Nel repository git dovranno essere presenti almeno 3 commit per ogni componente del gruppo.
 10. Prima di iniziare la scrittura del codice dovranno essere disegnati i wireframe. Faranno testo i dati salvati nel repository git:
   a) Creare una cartella docs e la sottocartella docs/wireframe dove verranno salvati i file dei wireframe.
