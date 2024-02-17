@@ -1,19 +1,19 @@
 <?php
 include './connessione.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $idNota = $_POST['id'];
-    $title = mysqli_real_escape_string($conn, $_POST['title']);
-    $priority = $_POST['priority'];
-    $content = mysqli_real_escape_string($conn, $_POST['testo']);
-    $date = $_POST['date'];
-    $userId = $_POST['userID'];
+$idNota = $_REQUEST['idNota'];
+$title = mysqli_real_escape_string($conn, $_REQUEST['title']);
+$priority = $_REQUEST['priority'];
+$content = mysqli_real_escape_string($conn, $_REQUEST['content']);
+$date = $_REQUEST['date'];
+$modifyDate = $_REQUEST['modifyDate'];
+$completed = $_REQUEST['completed'];
+$idUser = $_REQUEST['idUser'];;
 
-    $sql = "INSERT INTO notes VALUES ('$idNota', '$title','$priority','$content','$date','$userId')";
+$sql = "INSERT INTO notes VALUES ('$idNota', '$title','$priority','$content','$date','$modifyDate','$completed','$idUser')";
 
-    if (!$conn->query($sql)) {
-        echo "Errore durante la registrazione: " . $conn->error;
-    }
+if (!$conn->query($sql)) {
+    echo "Errore durante la registrazione: " . $conn->error;
 }
 
 $conn->close();
