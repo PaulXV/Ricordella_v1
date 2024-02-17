@@ -1,26 +1,21 @@
 <?php
-include 'scripts/connessione.php';
+include 'connessione.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-    $sql = "SELECT * FROM users";
-    $result = $conn->query($sql);
+    $sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
-    if ($result->num_rows > 0){
-        while ($row = $result->fetch_assoc()) {
-            if($row['username'] == $username && password_verify($password, $row['password'])){
-                echo "Accesso riuscito!";
-                $url = "Location: notes/index.html?userID=".$row['ID'];
-                header($url);
-                exit();
-            }else {
-                echo "<p style='text-align: center; color:red;'>Credenziali errate.</p>";
-            }
-        }
+    if ($conn->query($sql)) {
+        echo "Registrazione avvenuta con successo!";
+        //da mettere lo stesso loader per il login
+        header("Location: ../index.php");
+    } else {
+        echo "Errore durante la registrazione: " . $conn->error;
     }
 }
+
 $conn->close();
 ?>
 
@@ -28,7 +23,7 @@ $conn->close();
 <html lang="it" >
 <head>
     <meta charset="UTF-8">
-    <title>Le tue note - Login</title>
+    <title>Le tue note - Registrati</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
@@ -40,8 +35,8 @@ $conn->close();
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <h3 class="mb-5">Login</h3>
-                            
+                            <h3 class="mb-5">Registrati</h3>
+
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1">@</span>
                                 <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="">
@@ -52,8 +47,8 @@ $conn->close();
                                 <input type="password" name="password" class="form-control" id="exampleInputPassword1" value="">
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Accedi</button>
-                            <a class="btn btn-outline-secondary" href="scripts/register.php">Registrati</a>
+                            <button type="submit" class="btn btn-primary">Registrati</button>
+                            <a class="btn btn-outline-secondary" href="../index.php">Accedi</a>
                         </form>
                     </div>
                 </div>
