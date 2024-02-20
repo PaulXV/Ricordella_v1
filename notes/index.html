@@ -7,21 +7,38 @@
   <title>Le tue note</title>
   <link rel="stylesheet" href="./note.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+<div class="tHeading">
   <div class="titleHeading">
     <h2 class="heading">Le tue note</h2>
-    <h2><i class="fa-solid fa-user-slash" id="logout"></i></h2>
-  </div>
-
-  <div class="container" id="container">
-    <p class="info-text">Doppio click su una nota per rimuoverla</p>
-    <div class="app" id="app">
-      <button class="btn" id="btn">+</button>
+    <div class="logoutDiv"id="logoutDiv">
+      <h2><i class="fa-solid fa-user-slash" id="logout"></i></h2>
+      <p class="logoutText">Logout</p>
     </div>
   </div>
+</div>
 
-  <script src="./note.js"></script>
+<div class="filter">
+  <p class="filterText">Filtra qui le tue note: </p>
+  <div class="filters">
+    <input class="form-control" id="searchInTitiles" type="text" placeholder="Qui per titolo della nota...">
+    <input class="form-control" id="searchByPriority" type="number"  step="1" max="5" min="1" placeholder="Qui per priorità...">
+    <input class="form-control" id="searchByDate" type="date">
+  </div>
+</div>
+
+<div class="container" id="container">
+  <div class="app" id="app">
+    <button class="btn" id="btn">+</button>
+  </div>
+</div>
+
+<p class="info-text" style="font-size: 15px;">(Doppio click su una nota per rimuoverla)</p>
+
+<script src="./note.js"></script>
 </body>
 </html>

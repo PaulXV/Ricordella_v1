@@ -1,22 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Raleway&display=swap');
+
 body{
     margin: 0;
-    font-family: 'Courier New', Courier, monospace;
-    background: linear-gradient(to left, lightblue, lightgreen);
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(to left, lightblue, rgb(171, 226, 76));
     user-select: none;
 }
 
 h2{
     text-align: center;
-    color: darkblue;
+    color: darkslateblue;
     padding-top: 10px;
     font-size: 35px;
+}
+
+h2 i{
+    color: darkslateblue;
+}
+
+.logoutText{
+    cursor: pointer;
+}
+
+p.logoutText{
+    text-align: center;
+    color: darkslateblue;
+    font-size: 16px;
+    margin-top: -32px;
+}
+
+p.filterText{
+    color: darkcyan;
+    font-weight: 500;
 }
 
 .titleHeading {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 100px;
+    gap: 50px;
 }
 
 .heading {
@@ -30,7 +52,7 @@ h2{
 
 p{
     text-align: center;
-    color: darkblue;
+    color: cadetblue;
     font-size: 18px;
     margin-top:-20px;
 }
@@ -44,6 +66,7 @@ p{
 }
 
 .note{
+    position: relative;
     padding: 17px;
     border-radius: 15px;
     border: none;
@@ -57,25 +80,31 @@ p{
     box-sizing: border-box;
 }
 
+.note:hover, .note:focus{
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    transition: all 200ms ease;
+}
+
 .textarea::placeholder, .title::placeholder, .priority::placeholder{
     color: rgb(101, 101, 101);
     opacity: 70%;
 }
 
-.textarea, .title,.priority{
+.textarea, .title, .priority{
     background: transparent;
     border: none;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .title{
     border-bottom: 1px solid gray;
-    width: 65%;
+    width: 58%;
 }
 
 .priority{
     border-bottom: 1px solid gray;
     border-left: 1px solid gray;
-    width: 30%
+    width: 22%
 }
 
 .textarea{
@@ -90,11 +119,7 @@ p{
     opacity: 70%;
     font-size: 15px;
     user-select: none;
-}
-
-.note:hover, .note:focus{
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
-    transition: all 200ms ease;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .btn{
@@ -106,10 +131,215 @@ p{
     font-weight: 700;
     color: rgba(0, 0, 0, .3);
     cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .btn:hover{
     background: rgba(255, 255, 255, .40);
     transition: all 200ms ease;
     color: rgba(0, 0, 0, .6);
+}
+
+.filter{
+    width: 70%;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.filter p{
+    font-size: 20px;
+}
+
+.filters{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 10px;
+}
+
+#searchInTitiles{
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    background: rgba(221, 221, 221, 0.55);
+    height: 20px;
+    width: 30%;
+    font-family: 'Quicksand', sans-serif;
+}
+#searchInTitiles::placeholder{
+    color: rgb(101, 101, 101);
+    opacity: 70%;
+}
+
+#searchByPriority{
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    background: rgba(221, 221, 221, 0.55);
+    height: 20px;
+    width: 30%;
+    font-family: 'Quicksand', sans-serif;
+}
+#searchByPriority::placeholder{
+    color: rgb(101, 101, 101);
+    opacity: 70%;
+}
+
+#searchByDate{
+    border: 2px solid rgb(221, 221, 221);
+    border-radius: 5px;
+    background: rgba(221, 221, 221, 0.55);
+    height: 23px;
+    width: 25%;
+    color: rgb(101, 101, 101);
+    opacity: 70%;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#searchByPriority:focus, #searchInTitiles:focus, #searchByDate:focus{
+    outline: 1px solid white;
+}
+
+.title:focus, .priority:focus, .textarea:focus{
+    outline: none;
+}
+
+.delete{
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border-radius: 100px;
+    right: 6px;
+    top: 1px;
+    background-color: rgba(217, 216, 216, 0.55);
+    cursor: pointer;
+    padding: 0.15rem;
+}
+
+i.hidden, button.hidden{
+    display: none;
+}
+
+.saveBtn{
+    position: absolute;
+    right: 120px;
+    bottom: -20px;
+    cursor: pointer;
+    color: rgba(0, 0, 0, .3);
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    color: cadetblue;
+    background: rgba(241, 240, 240, 0.55);
+}
+
+.saveBnt:focus{
+    outline: 1px solid white;
+}
+
+/**************************************************************************************************/
+/* per il checked sul completato */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    margin: 0px 2px 0px 5px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 3px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: cadetblue;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/**************************************************************************************************/
+
+@media screen and (max-width: 768px){
+    .app{
+        grid-template-columns: repeat(auto-fill, 250px);
+        padding-top: 20px;
+    }
+
+    .textarea{
+        height: 80%;
+    }
+
+    .titleHeading{
+        justify-content: space-evenly;
+        gap: 0;
+    }
+
+    .filter p{
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+
+    .filters{
+        flex-direction: column;
+        column-gap: 0;
+        align-items: center;
+        flex-flow: wrap;
+    }
+
+    .info-text{
+        display: none;
+    }
+
+    .slider:before{
+        height: 11px;
+        width: 11px;
+    }
+
+    .switch{
+        margin: 0px;
+    }
+
+    .saveBtn{
+        right: 85px;
+    }
 }
