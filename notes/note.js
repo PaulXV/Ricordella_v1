@@ -194,7 +194,7 @@ function getDataPerDatabase(){
 //controllare se funziona
 //funzione che elimina la nota dal database e dalla pagina
 function deleteNote(id, element) {
-  const note = notes.filter((note)=>note.id != id);
+  const note = notes.filter((note)=>note.id == id);
   appEl.removeChild(element);
   $.ajax({
     url: "../scripts/deleteNote.php",
