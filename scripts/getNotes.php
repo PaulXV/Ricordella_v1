@@ -1,13 +1,16 @@
 <?php
-require 'connessione.php';
+require './connessione.php';
 $idUser = $_REQUEST['idUser'];
+$queryDB = 'SELECT * FROM notes WHERE idUtente='.$idUser;
+$rows = array();
 
-$query = 'SELECT * FROM utente WHERE idUtente == '.$idUser;
-$result = $conn->query($query);
+$result = $conn->query($queryDB,0);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $rows[] = $row;
     }
 }
-$mysqli->close();
+
+$conn->close();
+
 echo json_encode($rows);

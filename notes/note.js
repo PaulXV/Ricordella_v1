@@ -12,22 +12,36 @@ logout.addEventListener("click", function(){
 
 //funzione che fa comparire le note a schermo
 function displayNotes(notes){
+  console.log(notes[0]);
   notes.forEach((note)=>{
-    if(note.idUtente == idUser){
       const noteEl = createNoteEl(note.id, note.title, note.priority, note.content, note.date, note.modifyDate, note.completed);
       appEl.insertBefore(noteEl, btnEl);
-    }
-    document.querySelectorAll('.delete').forEach((el) => {
-      el.addEventListener("click", (event) => {
-        const warning = confirm("Do you want to delete this note?");
-        const nota = event.target.parentElement;
-        let idNota = nota.querySelector(".idNota").value;
-        if (warning) {
-          deleteNote(idNota, nota);
-        }
-      });
+  });
+
+  document.querySelectorAll('.delete').forEach((el) => {
+    el.addEventListener("click", (event) => {
+      const warning = confirm("Do you want to delete this note?");
+      const nota = event.target.parentElement;
+      let idNota = nota.querySelector(".idNota").value;
+      if (warning) {
+        deleteNote(idNota, nota);
+      }
     });
   });
+
+  document.querySelectorAll('.saveBtn').forEach((btn)=>{
+    let parentEl = btn.parentElement;
+    let idNota = parentEl.querySelector('.idNota').value;
+    let titolo = parentEl.querySelector('.title').value;
+    let priorita = parentEl.querySelector('.priority').value;
+    let testo = parentEl.querySelector('.textarea').value;
+    let check = parentEl.querySelector('.checkbox').checked;
+    check = (check) ? check=1 : check=0;
+    btn.addEventListener("click", () => {
+      updateNote(idNota, titolo, priorita, testo, check);
+    });
+  });
+
 }
 
 //funzione che crea l'elemento nota e lo ritorna
@@ -231,7 +245,7 @@ function addNote() {
     title: "",
     priority: "",
     content: "",
-    date: "",
+    date: getDataPerDatabase(),
     modifyDate: "",
     completed: false,
     idUtente: idUser,
@@ -263,15 +277,15 @@ function saveNote(note) {
 
 //da verificare il risultato
 //funzione che recupera le note dal database, le salva nella variabile notes e le fa comparire a schermo
-function getNotes() {
+function getNotes(idUser) {
   $.ajax({
     async: false,
     url: "../scripts/getNotes.php",
     data: {'idUser':idUser},
     success: function(data){
-      console.log(data);
-      //notes = data;
-      //displayNotes(data);
+      notes = data;
+      console.log(notes);
+      displayNotes(data);
     },
     error: function (richiesta,stato,errori) {
       alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
@@ -355,9 +369,8 @@ window.addEventListener('load', function() {
   }
 
   let header = window.location.href.split("?")[1];
-  console.log(header);
   idUser = header.split("=")[1];
 
-  getNotes();
+  getNotes(idUser);
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
