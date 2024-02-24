@@ -7,14 +7,13 @@ let idUser;       //userID dall'url in GET per avere le note corrispondenti - as
 btnEl.addEventListener("click", addNote);
 
 logout.addEventListener("click", function(){
-  window.open("http://brugnola.bearzi.info/ricordella", "_self");
+  window.open("https://brugnola.bearzi.info/ricordella", "_self");
 })
 
 //funzione che fa comparire le note a schermo
 function displayNotes(notes){
-  console.log(notes[0]);
   notes.forEach((note)=>{
-      const noteEl = createNoteEl(note.id, note.title, note.priority, note.content, note.date, note.modifyDate, note.completed);
+      const noteEl = createNoteEl(note['id'], note['titolo'], note['priorita'], note['testo'], note['dataCreazione'], note['dataModifica'], note['completed']);
       appEl.insertBefore(noteEl, btnEl);
   });
 
@@ -30,14 +29,16 @@ function displayNotes(notes){
   });
 
   document.querySelectorAll('.saveBtn').forEach((btn)=>{
-    let parentEl = btn.parentElement;
-    let idNota = parentEl.querySelector('.idNota').value;
-    let titolo = parentEl.querySelector('.title').value;
-    let priorita = parentEl.querySelector('.priority').value;
-    let testo = parentEl.querySelector('.textarea').value;
-    let check = parentEl.querySelector('.checkbox').checked;
-    check = (check) ? check=1 : check=0;
     btn.addEventListener("click", () => {
+      //console.log('hai cliccato il bottone salva');
+      let parentEl = btn.parentElement;
+      let idNota = parentEl.querySelector('.idNota').value;
+      let titolo = parentEl.querySelector('.title').value;
+      let priorita = parentEl.querySelector('.priority').value;
+      let testo = parentEl.querySelector('.textarea').value;
+      let check = parentEl.querySelector('.checkbox').checked;
+      check = (check) ? check=1 : check=0;
+      //console.log(idNota+','+titolo+','+priorita+','+testo+','+check);
       updateNote(idNota, titolo, priorita, testo, check);
     });
   });
@@ -87,7 +88,7 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   let checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.classList.add("checkbox");
-  if(completed){
+  if(completed==1){
     checkbox.checked = true;
     let elem = '<label class="switch">';
     elem += checkbox.outerHTML.slice(0, -1) + "checked>";
@@ -153,9 +154,6 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   saveBtn.innerHTML = "save  " + '<i class="fa-solid fa-file-arrow-up fa-2xs"></i>';
   saveBtn.classList.add("saveBtn");
   saveBtn.classList.add("hidden");
-  saveBtn.addEventListener("click", () => {
-    updateNote(id, titolo.value, priorita.value, testo.value, checkbox.checked);
-  });
   element.appendChild(saveBtn);
 
   element.addEventListener("dblclick", () => {
@@ -205,15 +203,15 @@ function getDataPerDatabase(){
   return year + "-" + month + "-" + day;
 }
 
-//controllare se funziona
 //funzione che elimina la nota dal database e dalla pagina
 function deleteNote(id, element) {
-  const note = notes.filter((note)=>note.id == id);
   appEl.removeChild(element);
   $.ajax({
+    async: false,
     url: "../scripts/deleteNote.php",
-    data: {'idNota':note.id},
+    data: {'idNota':id},
     success: function(){
+      window.location.reload();
       console.log('completata la rimozione');
     },
     error: function (richiesta,stato,errori) {
@@ -222,18 +220,24 @@ function deleteNote(id, element) {
   });
 }
 
-//da vedere se funziona se lascio l'array notes, che viene popolato con il getNotes() iniziale al caricamento
 //funzione che aggiorna la nota nel database e nella pagina
 function updateNote(id, title, priority, content, completed) {
   notes.filter((note) => {
     if (note.id == id) {
-      note.title = title;
-      note.priority = priority;
-      note.content = content;
-      note.modifyDate = getDataPerDatabase();
-      note.completed = completed;
-      saveNote(note);
-      window.location.reload(); //forse non serve, basta la funzione saveNote()
+      $.ajax({
+        async: false,
+        url: "../scripts/update.php",
+        data: {'idNota':note.id, 'title':title,
+          'priority':priority, 'content':content,
+          'date':note.dataCreazione, 'modifyDate':getDataPerDatabase(), 'completed':completed, 'idUser':idUser},
+        success: function(){
+          //window.location.reload();
+          console.log('nota aggiornata con successo');
+        },
+        error: function (richiesta,stato,errori) {
+          alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
+        }
+      });
     }
   });
 }
@@ -242,30 +246,31 @@ function updateNote(id, title, priority, content, completed) {
 function addNote() {
   const noteObj = {
     id: Math.floor(Math.random() * 100000),
-    title: "",
-    priority: "",
-    content: "",
-    date: getDataPerDatabase(),
-    modifyDate: "",
+    titolo: "",
+    priorita: "",
+    testo: "",
+    dataCreazione: getDataPerDatabase(),
+    dataModifica: "",
     completed: false,
     idUtente: idUser,
   };
-  const noteEl = createNoteEl(noteObj.id, noteObj.title, noteObj.priority, noteObj.content, noteObj.date, noteObj.modifyDate, noteObj.completed);
+  const noteEl = createNoteEl(noteObj.id, noteObj.titolo, noteObj.priorita, noteObj.testo, noteObj.dataCreazione, noteObj.dataModifica, noteObj.completed);
+  noteEl.querySelector('.saveBtn').classList.toggle('hidden');
   appEl.insertBefore(noteEl, btnEl);
-
   notes.push(noteObj);
-
   saveNote(noteObj);
 }
 
 //da verificare il funzionamento
 //funzione che salva la nota nel database
 function saveNote(note) {
+  //console.log(note);
+  //la mantengo asicrona cosi me la salva ma posso fare altro
   $.ajax({
     url: "../scripts/saveNote.php",
-    data: {'idNota':note.id, 'title':note.title,
-      'priority':note.priority, 'content':note.content,
-      'date':note.date, 'modifyDate':note.modifyDate, 'completed':note.completed, 'idUser':idUser},
+    data: {'idNota':note.id, 'title':note.titolo,
+      'priority':note.priorita, 'content':note.testo,
+      'date':note.dataCreazione, 'modifyDate':note.dataModifica, 'completed':note.completed, 'idUser':idUser},
     success: function(){
       console.log('nota inserita con successo');
     },
@@ -283,9 +288,9 @@ function getNotes(idUser) {
     url: "../scripts/getNotes.php",
     data: {'idUser':idUser},
     success: function(data){
-      notes = data;
-      console.log(notes);
-      displayNotes(data);
+      notes = $.parseJSON(data);
+      //console.log(notes);
+      displayNotes(notes);
     },
     error: function (richiesta,stato,errori) {
       alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
