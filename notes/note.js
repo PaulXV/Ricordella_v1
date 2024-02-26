@@ -30,7 +30,6 @@ function displayNotes(notes){
 
   document.querySelectorAll('.saveBtn').forEach((btn)=>{
     btn.addEventListener("click", () => {
-      //console.log('hai cliccato il bottone salva');
       let parentEl = btn.parentElement;
       let idNota = parentEl.querySelector('.idNota').value;
       let titolo = parentEl.querySelector('.title').value;
@@ -38,7 +37,6 @@ function displayNotes(notes){
       let testo = parentEl.querySelector('.textarea').value;
       let check = parentEl.querySelector('.checkbox').checked;
       check = (check) ? check=1 : check=0;
-      //console.log(idNota+','+titolo+','+priorita+','+testo+','+check);
       updateNote(idNota, titolo, priorita, testo, check);
     });
   });
@@ -56,14 +54,6 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   idNota.classList.add("idNota");
   idNota.value = id;
   element.appendChild(idNota);
-  //da capire come gestire idUtente, potrebbe non servire, se serve decommentare le righe seguenti
-  /*
-  let idUtente = document.createElement("input");
-  idUtente.classList.add("idUtente");
-  idUtente.type = "hidden";
-  idUtente.value = id;
-  element.appendChild(idUtente);
-  */
 
   let deleteIcon = '<i class="fa-regular fa-trash-can delete hidden" style="color: #ff0000;"></i>';
   element.insertAdjacentHTML('beforeend', deleteIcon);
@@ -206,13 +196,15 @@ function getDataPerDatabase(){
 //funzione che elimina la nota dal database e dalla pagina
 function deleteNote(id, element) {
   appEl.removeChild(element);
+  notes.filter((note) => {
+    if(note["id"]==id)
+      notes.remove(note);
+  })
   $.ajax({
-    async: false,
     url: "../scripts/deleteNote.php",
     data: {'idNota':id},
     success: function(){
-      window.location.reload();
-      console.log('completata la rimozione');
+      //console.log('completata la rimozione');
     },
     error: function (richiesta,stato,errori) {
       alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
@@ -231,8 +223,8 @@ function updateNote(id, title, priority, content, completed) {
           'priority':priority, 'content':content,
           'date':note.dataCreazione, 'modifyDate':getDataPerDatabase(), 'completed':completed, 'idUser':idUser},
         success: function(){
-          //window.location.reload();
-          console.log('nota aggiornata con successo');
+          window.location.reload();
+          //console.log('nota aggiornata con successo');
         },
         error: function (richiesta,stato,errori) {
           alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
@@ -255,16 +247,13 @@ function addNote() {
     idUtente: idUser,
   };
   const noteEl = createNoteEl(noteObj.id, noteObj.titolo, noteObj.priorita, noteObj.testo, noteObj.dataCreazione, noteObj.dataModifica, noteObj.completed);
-  noteEl.querySelector('.saveBtn').classList.toggle('hidden');
   appEl.insertBefore(noteEl, btnEl);
   notes.push(noteObj);
   saveNote(noteObj);
 }
 
-//da verificare il funzionamento
 //funzione che salva la nota nel database
 function saveNote(note) {
-  //console.log(note);
   //la mantengo asicrona cosi me la salva ma posso fare altro
   $.ajax({
     url: "../scripts/saveNote.php",
@@ -272,7 +261,7 @@ function saveNote(note) {
       'priority':note.priorita, 'content':note.testo,
       'date':note.dataCreazione, 'modifyDate':note.dataModifica, 'completed':note.completed, 'idUser':idUser},
     success: function(){
-      console.log('nota inserita con successo');
+      //console.log('nota inserita con successo');
     },
     error: function (richiesta,stato,errori) {
       alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
@@ -280,7 +269,6 @@ function saveNote(note) {
   });
 }
 
-//da verificare il risultato
 //funzione che recupera le note dal database, le salva nella variabile notes e le fa comparire a schermo
 function getNotes(idUser) {
   $.ajax({
@@ -288,8 +276,8 @@ function getNotes(idUser) {
     url: "../scripts/getNotes.php",
     data: {'idUser':idUser},
     success: function(data){
+      //console.log(data);
       notes = $.parseJSON(data);
-      //console.log(notes);
       displayNotes(notes);
     },
     error: function (richiesta,stato,errori) {
@@ -324,21 +312,16 @@ $(document).ready(function(){
 $(document).ready(function(){
   $("#searchByDate").on("change", function() {
     let date = $(this).val();
-    console.log("data: "+date);
     let parts = date.split('-');
     let value = parts[2] + '/' + parts[1] + '/' + parts[0];
-    console.log("data come filtro: "+value);
     document.querySelectorAll('#app div .date').forEach((el) => {
       let part = el.innerHTML.split('|')[0];
       part = part.split('</i>')[1];
       part = part.split(' ');
       let dataCreazione = part[2];
-      console.log("data della nota: "+ dataCreazione);
       if(dataCreazione == value){
-        console.log("ciao");
         el.parentElement.style.display = "block";
       }else{
-        console.log("ciao2");
         el.parentElement.style.display = "none";
       }
     });
@@ -375,7 +358,7 @@ window.addEventListener('load', function() {
 
   let header = window.location.href.split("?")[1];
   idUser = header.split("=")[1];
-
+  //console.log(idUser);
   getNotes(idUser);
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
