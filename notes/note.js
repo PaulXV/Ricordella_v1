@@ -18,27 +18,15 @@ function displayNotes(notes){
   });
 
   document.querySelectorAll('.delete').forEach((el) => {
-    el.addEventListener("click", (event) => {
-      const warning = confirm("Do you want to delete this note?");
-      const nota = event.target.parentElement;
-      let idNota = nota.querySelector(".idNota").value;
-      if (warning) {
-        deleteNote(idNota, nota);
-      }
-    });
+    el.addEventListener("click", delNote);
   });
 
   document.querySelectorAll('.saveBtn').forEach((btn)=>{
-    btn.addEventListener("click", () => {
-      let parentEl = btn.parentElement;
-      let idNota = parentEl.querySelector('.idNota').value;
-      let titolo = parentEl.querySelector('.title').value;
-      let priorita = parentEl.querySelector('.priority').value;
-      let testo = parentEl.querySelector('.textarea').value;
-      let check = parentEl.querySelector('.checkbox').checked;
-      check = (check) ? check=1 : check=0;
-      updateNote(idNota, titolo, priorita, testo, check);
-    });
+    btn.addEventListener("click", upNote(btn));
+  });
+
+  document.querySelectorAll('.mail').forEach(mail =>{
+    mail.addEventListener('click', mailFunc);
   });
 
 }
@@ -55,8 +43,16 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   idNota.value = id;
   element.appendChild(idNota);
 
-  let deleteIcon = '<i class="fa-regular fa-trash-can delete hidden" style="color: #ff0000;"></i>';
-  element.insertAdjacentHTML('beforeend', deleteIcon);
+  let div = document.createElement("div");
+  div.classList.add("actions");
+
+  let shareIcon = '<div class="mail-div"><i class="fa-regular fa-paper-plane fa-sm mail" style="color: #4929a8;"></i></div>';
+  div.insertAdjacentHTML('beforeend', shareIcon);
+
+  let deleteIcon = '<div class="delete-div"><i class="fa-regular fa-trash-can fa-sm delete" style="color: #ff0000;"></i></div>';
+  div.insertAdjacentHTML('beforeend', deleteIcon);
+
+  element.appendChild(div);
 
   let titolo = document.createElement("input");
   titolo.type = "text";
@@ -198,7 +194,7 @@ function deleteNote(id, element) {
   appEl.removeChild(element);
   notes.filter((note) => {
     if(note["id"]==id)
-      notes.remove(note);
+      notes.splice(notes.indexOf(note), 1);
   })
   $.ajax({
     url: "../scripts/deleteNote.php",
@@ -246,10 +242,13 @@ function addNote() {
     completed: false,
     idUtente: idUser,
   };
-  const noteEl = createNoteEl(noteObj.id, noteObj.titolo, noteObj.priorita, noteObj.testo, noteObj.dataCreazione, noteObj.dataModifica, noteObj.completed);
-  appEl.insertBefore(noteEl, btnEl);
-  notes.push(noteObj);
   saveNote(noteObj);
+  const noteEl = createNoteEl(noteObj.id, noteObj.titolo, noteObj.priorita, noteObj.testo, noteObj.dataCreazione, noteObj.dataModifica, noteObj.completed);
+  appEl.insertAdjacentElement('afterbegin',noteEl);
+  document.querySelector('.mail').addEventListener('click', mailFunc);
+  document.querySelector('.delete').addEventListener('click', delNote);
+  document.querySelector('.saveBtn').addEventListener('click', upNote);
+  notes.push(noteObj);
 }
 
 //funzione che salva la nota nel database
@@ -260,9 +259,7 @@ function saveNote(note) {
     data: {'idNota':note.id, 'title':note.titolo,
       'priority':note.priorita, 'content':note.testo,
       'date':note.dataCreazione, 'modifyDate':note.dataModifica, 'completed':note.completed, 'idUser':idUser},
-    success: function(){
-      //console.log('nota inserita con successo');
-    },
+    success: function(){},
     error: function (richiesta,stato,errori) {
       alert("E' evvenuto un errore. Il stato della chiamata: "+stato);
     }
@@ -329,36 +326,54 @@ $(document).ready(function(){
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-//responsive part
-window.addEventListener('resize', function() {
-  let larghezza = window.innerWidth;
-  if(larghezza < 768){
-    document.querySelectorAll('i.hidden').forEach((el) => {
-      el.classList.remove('hidden');
-    });
-  }else{
-    this.document.querySelectorAll('.delete').forEach((el) => {
-      el.classList.add('hidden');
-    });
-  }
-});
-
-//responsive part + popolazione delle note al caricamento della pagina
+//popolazione delle note al caricamento della pagina
 window.addEventListener('load', function() {
-  let larghezza = window.innerWidth;
-  if(larghezza < 768){
-    document.querySelectorAll('i.hidden').forEach((el) => {
-      el.classList.remove('hidden');
-    });
-  }else{
-    this.document.querySelectorAll('.delete').forEach((el) => {
-      el.classList.add('hidden');
-    });
-  }
-
   let header = window.location.href.split("?")[1];
   idUser = header.split("=")[1];
   //console.log(idUser);
   getNotes(idUser);
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
+//funzioni per gli addEventListener
+function delNote(event){
+  const warning = confirm("Sei sicuro di eliminare questa nota?");
+  const nota = event.target.parentElement.parentElement.parentElement;
+  let idNota = nota.querySelector(".idNota").value;
+  if (warning) {
+    deleteNote(idNota, nota);
+  }
+}
+
+function upNote(event){
+  let parentEl = event.target.parentElement;
+  let idNota = parentEl.querySelector('.idNota').value;
+  let titolo = parentEl.querySelector('.title').value;
+  let priorita = parentEl.querySelector('.priority').value;
+  let testo = parentEl.querySelector('.textarea').value;
+  let check = parentEl.querySelector('.checkbox').checked;
+  check = (check) ? check=1 : check=0;
+  updateNote(idNota, titolo, priorita, testo, check);
+}
+
+function mailFunc(event){
+  let email = prompt("Inserisci la mail del destinatario: ");
+  const nota = event.target.parentElement.parentElement.parentElement;
+  console.log(nota);
+  if(email){
+    let destinatario = email;
+    let oggetto = "Promemoria n°"+nota.querySelector('.idNota').value;
+    let testo = "titolo: "+nota.querySelector('.title').value;
+    testo += "\nPriorità: " + nota.querySelector('.priority').value;
+    testo += "\nContenuto: " + nota.querySelector('.textarea').value;
+    $.ajax({
+      url: '../scripts/mailService.php',
+      data: {"destinatario":destinatario, "oggetto": oggetto, "testo":testo},
+      success: ()=>{
+        alert("Email inviata con successo!");
+      },
+      error: ()=>{
+        alert("E' avvenuto un errore... ci dispiace");
+      }
+    });
+  }
+}
