@@ -17,18 +17,6 @@ function displayNotes(notes){
       appEl.insertBefore(noteEl, btnEl);
   });
 
-  document.querySelectorAll('.delete').forEach((el) => {
-    el.addEventListener("click", delNote);
-  });
-
-  document.querySelectorAll('.saveBtn').forEach((btn)=>{
-    btn.addEventListener("click", upNote(btn));
-  });
-
-  document.querySelectorAll('.mail').forEach(mail =>{
-    mail.addEventListener('click', mailFunc);
-  });
-
 }
 
 //funzione che crea l'elemento nota e lo ritorna
@@ -53,6 +41,8 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   div.insertAdjacentHTML('beforeend', deleteIcon);
 
   element.appendChild(div);
+  element.querySelector('.mail').addEventListener('click', mailFunc);
+  element.querySelector('.delete').addEventListener('click', delNote);
 
   let titolo = document.createElement("input");
   titolo.type = "text";
@@ -140,6 +130,7 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   saveBtn.innerHTML = "save  " + '<i class="fa-solid fa-file-arrow-up fa-2xs"></i>';
   saveBtn.classList.add("saveBtn");
   saveBtn.classList.add("hidden");
+  saveBtn.addEventListener('click', upNote);
   element.appendChild(saveBtn);
 
   element.addEventListener("dblclick", () => {
@@ -245,9 +236,6 @@ function addNote() {
   saveNote(noteObj);
   const noteEl = createNoteEl(noteObj.id, noteObj.titolo, noteObj.priorita, noteObj.testo, noteObj.dataCreazione, noteObj.dataModifica, noteObj.completed);
   appEl.insertAdjacentElement('afterbegin',noteEl);
-  document.querySelector('.mail').addEventListener('click', mailFunc);
-  document.querySelector('.delete').addEventListener('click', delNote);
-  document.querySelector('.saveBtn').addEventListener('click', upNote);
   notes.push(noteObj);
 }
 
@@ -358,7 +346,7 @@ function upNote(event){
 function mailFunc(event){
   let email = prompt("Inserisci la mail del destinatario: ");
   const nota = event.target.parentElement.parentElement.parentElement;
-  console.log(nota);
+  //console.log(nota);
   if(email){
     let destinatario = email;
     let oggetto = "Promemoria n°"+nota.querySelector('.idNota').value;

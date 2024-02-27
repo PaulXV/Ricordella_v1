@@ -1,7 +1,7 @@
 <?php
 require './connessione.php';
 $idUser = $_REQUEST['idUser'];
-$queryDB = 'SELECT * FROM notes WHERE idUtente='.$idUser;
+$queryDB = 'SELECT * FROM notes WHERE idUtente='.$idUser.' ORDER BY dataCreazione DESC';
 $rows = array();
 $result = $conn->query($queryDB);
 if ($result->num_rows > 0) {
