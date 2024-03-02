@@ -11,14 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0){
         while ($row = $result->fetch_assoc()) {
             if($row['username'] == $username && password_verify($password, $row['password'])){
-                echo "Accesso riuscito!";
+                $conn->close();
                 $url = "Location: notes/index.html?userID=".$row['ID'];
                 header($url);
-                exit();
-            }else {
-                echo "<p style='text-align: center; color:red;'>Credenziali errate.</p>";
+                break;
             }
         }
+        echo "<p style='text-align: center; color:red;'>Credenziali errate.</p>";
     }
 }
 $conn->close();
