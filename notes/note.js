@@ -34,7 +34,7 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
   let div = document.createElement("div");
   div.classList.add("actions");
 
-  let shareIcon = '<div class="mail-div"><i class="fa-regular fa-paper-plane fa-sm mail" style="color: #4929a8;"></i></div>';
+  let shareIcon = '<div class="mail-div"><i class="fa-regular fa-paper-plane fa-sm mail" style="color: #247BA0  ;"></i></div>';
   div.insertAdjacentHTML('beforeend', shareIcon);
 
   let deleteIcon = '<div class="delete-div"><i class="fa-regular fa-trash-can fa-sm delete" style="color: #ff0000;"></i></div>';
@@ -68,15 +68,15 @@ function createNoteEl(id, title, priority, content, date, modifyDate, completed)
     checkbox.checked = true;
     let elem = '<label class="switch">';
     elem += checkbox.outerHTML.slice(0, -1) + "checked>";
-    elem += '<span class="slider round"></span>'
-    elem += '</label>'
+    elem += '<span class="slider round"></span>';
+    elem += '</label>';
     element.insertAdjacentHTML('beforeend', elem);
   }else{
     checkbox.checked = false;
     let elem = '<label class="switch">';
     elem += checkbox.outerHTML;
-    elem += '<span class="slider round"></span>'
-    elem += '</label>'
+    elem += '<span class="slider round"></span>';
+    elem += '</label>';
     element.insertAdjacentHTML('beforeend', elem);
   }
 
@@ -321,6 +321,7 @@ window.addEventListener('load', function() {
   //console.log(idUser);
   getNotes(idUser);
 });
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //funzioni per gli addEventListener
 function delNote(event){

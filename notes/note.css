@@ -3,19 +3,21 @@
 body{
     margin: 0;
     font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(to left, lightblue, rgb(171, 226, 76));
+    background-image: url('./back3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
     user-select: none;
 }
 
 h2{
     text-align: center;
-    color: darkslateblue;
+    color: #beca11;
     padding-top: 10px;
     font-size: 35px;
 }
 
 h2 i{
-    color: darkslateblue;
+    color: #beca11;;
 }
 
 .logoutText{
@@ -24,13 +26,13 @@ h2 i{
 
 p.logoutText{
     text-align: center;
-    color: darkslateblue;
+    color: #beca11;;
     font-size: 16px;
     margin-top: -32px;
 }
 
 p.filterText{
-    color: darkcyan;
+    color: #beca11;;
     font-weight: 500;
 }
 
@@ -52,7 +54,7 @@ p.filterText{
 
 p{
     text-align: center;
-    color: cadetblue;
+    color: #beca11;;
     font-size: 18px;
     margin-top:-20px;
 }
@@ -67,16 +69,15 @@ p{
 
 .note{
     position: relative;
-    padding: 20px 10px 17px 10px;
+    padding: 17px 10px 17px 10px;
     border-radius: 15px;
     border: none;
     resize: none;
     box-shadow: 0 0 3px rgba(0, 0, 0, .3);
     font-size: 18px;
     height: 200px;
-    color: rgb(37, 36, 36);
     outline: none;
-    background: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, 0.6 );
     box-sizing: border-box;
 }
 
@@ -86,25 +87,29 @@ p{
 }
 
 .textarea::placeholder, .title::placeholder, .priority::placeholder{
-    color: rgb(101, 101, 101);
+    color: rgb(71, 71, 71);
     opacity: 70%;
+    font-weight: 700;
 }
 
 .textarea, .title, .priority{
     background: transparent;
     border: none;
     font-family: 'Quicksand', sans-serif;
+    font-size: 15px !important;
+    font-weight: 700;
+    color: rgb(71, 71, 71);
 }
 
 .title{
     border-bottom: 1px solid gray;
-    width: 59%;
+    width: 58%;
 }
 
 .priority{
     border-bottom: 1px solid gray;
     border-left: 1px solid gray;
-    width: 24%;
+    width: 25%;
 }
 
 .textarea{
@@ -115,9 +120,9 @@ p{
 
 .date{
     margin-bottom: 0;
-    color: rgb(101, 101, 101);
-    opacity: 70%;
+    color: rgba(71, 71, 71, 0.551);
     font-size: 15px;
+    font-weight: 700;
     user-select: none;
     font-family: 'Quicksand', sans-serif;
 }
@@ -157,7 +162,7 @@ p{
     padding: 10px;
 }
 
-#searchInTitiles{
+#searchInTitiles, #searchByPriority{
     border: 1px solid rgb(221, 221, 221);
     border-radius: 5px;
     background: rgba(221, 221, 221, 0.55);
@@ -165,26 +170,19 @@ p{
     width: 30%;
     font-family: 'Quicksand', sans-serif;
 }
+
 #searchInTitiles::placeholder{
     color: rgb(101, 101, 101);
     opacity: 70%;
 }
 
-#searchByPriority{
-    border: 1px solid rgb(221, 221, 221);
-    border-radius: 5px;
-    background: rgba(221, 221, 221, 0.55);
-    height: 20px;
-    width: 30%;
-    font-family: 'Quicksand', sans-serif;
-}
 #searchByPriority::placeholder{
     color: rgb(101, 101, 101);
     opacity: 70%;
 }
 
 #searchByDate{
-    border: 2px solid rgb(221, 221, 221);
+    border: 1px solid rgb(221, 221, 221);
     border-radius: 5px;
     background: rgba(221, 221, 221, 0.55);
     height: 23px;
@@ -231,31 +229,16 @@ p{
     height: 20px;
     width: 50px;
     border-radius: 100px;
-    right: -9px;
-    top: -6px;
-    background-color: #d9d8d88c;
+    right: -15px;
+    top: -13px;
+    background-color: rgb(219, 219, 219);
+    border-left: 2px solid #247BA0;
+    border-right: 2px solid red;
+    padding: 2px 0px;
 }
 
 .actions:hover{
     cursor: pointer;
-}
-
-.mail-div:hover{
-    background: rgb(73, 41, 168);
-    cursor: pointer;
-}
-
-.delete-div:hover{
-    background: red 50%;
-    cursor: pointer;
-}
-
-.mail, .delete{
-    font-size: .875em !important;
-}
-
-.mail{
-    margin-right: 3px;
 }
 
 .delete-div, .mail-div{
@@ -264,19 +247,29 @@ p{
     align-items: center;
     border-radius: 20px 0 0 20px;
     height: 20px;
-    width: 25px;
-    color:white !important;
+    width: 26px;
+    padding: 2px 0;
 }
 
 .delete-div{
     border-radius: 0 20px 20px 0;
 }
 
-.mail-div:hover i{
-    color: white !important;
+.mail-div:hover{
+    background: #247BA0;
+    cursor: pointer;
 }
 
-.delete-div:hover i{
+.delete-div:hover{
+    background: red;
+    cursor: pointer;
+}
+
+.mail, .delete{
+    font-size: .875em !important;
+}
+
+.delete-div:hover i, .mail-div:hover i{
     color: white !important;
 }
 
@@ -287,7 +280,7 @@ p{
     display: inline-block;
     width: 30px;
     height: 15px;
-    margin: 0px 2px 0px 5px;
+    margin-left: 7px;
 }
 
 .switch input {
@@ -313,7 +306,7 @@ p{
     content: "";
     height: 13px;
     width: 12px;
-    left: 3px;
+    left: 2px;
     bottom: 1px;
     background-color: white;
     -webkit-transition: .4s;
@@ -321,17 +314,17 @@ p{
 }
 
 input:checked + .slider {
-    background-color: cadetblue;
+    background-color: #9aa709;
 }
 
 input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #9aa709;
 }
 
 input:checked + .slider:before {
-    -webkit-transform: translateX(13px);
-    -ms-transform: translateX(13px);
-    transform: translateX(13px);
+    -webkit-transform: translateX(15px);
+    -ms-transform: translateX(15px);
+    transform: translateX(15px);
 }
 
 .slider.round {
@@ -345,9 +338,17 @@ input:checked + .slider:before {
 /**************************************************************************************************/
 
 @media screen and (max-width: 768px){
+    body{
+        background-image: url('./back3-responsive.jpg');
+    }
+    
     .app{
         grid-template-columns: repeat(auto-fill, 250px);
         padding-top: 20px;
+    }
+
+    .note{
+        padding-bottom: 4px;
     }
 
     .textarea{
