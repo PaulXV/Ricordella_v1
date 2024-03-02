@@ -209,11 +209,10 @@ p{
     right: 120px;
     bottom: -20px;
     cursor: pointer;
-    color: rgba(0, 0, 0, .3);
     border: none;
     border-radius: 10px;
     font-size: 20px;
-    color: cadetblue;
+    color: #ecff17;
     background: rgba(241, 240, 240, 0.55);
 }
 
