@@ -18,3 +18,6 @@ Richieste opzionali
 3. Aggiungere dei filtri per la ricerca tra le note. Ad esempio per data, per testo, per
 archiviazione, per priorità,...
 4. L’utente può inviare il singolo promemoria ad un indirizzo email.
+
+![tabella notes SQL](https://github.com/PaulXV/Ricordella/assets/113890106/127eaae2-21ae-406e-b454-a867e460be1a)
+![tabella users SQL](https://github.com/PaulXV/Ricordella/assets/113890106/85e14fb6-037b-45d6-a757-84e5b177632a)
