@@ -19,5 +19,10 @@ Richieste opzionali
 archiviazione, per priorità,...
 4. L’utente può inviare il singolo promemoria ad un indirizzo email.
 
-![tabella notes SQL](https://github.com/PaulXV/Ricordella/assets/113890106/127eaae2-21ae-406e-b454-a867e460be1a)
-![tabella users SQL](https://github.com/PaulXV/Ricordella/assets/113890106/85e14fb6-037b-45d6-a757-84e5b177632a)
+
+Struttura tabella notes per il database:
+![tabella notes SQL](https://github.com/PaulXV/Ricordella/assets/113890106/9bd5b5fe-d6f0-42bd-becd-032fa0af65b5)
+
+
+Struttura tabella users per il database:
+![tabella users SQL](https://github.com/PaulXV/Ricordella/assets/113890106/7f5aa5b4-6733-422f-8b3b-11ad744fadbe)
