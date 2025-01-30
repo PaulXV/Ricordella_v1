@@ -1,4 +1,4 @@
-RICORDELLA
+# RICORDELLA
 1. Sviluppare una applicazione web utilizzando PHP e mySQL.
 2. L’applicazione servirà agli utenti per memorizzare i loro promemoria.
 3. Ogni utente potrà accedere alla propria lista di promemoria solo dopo aver fatto il login con indirizzo email e password.
@@ -17,9 +17,13 @@ archiviazione, per priorità,...
 11. L’utente può inviare il singolo promemoria ad un indirizzo email.
 
 
-Struttura tabella notes per il database:
+### Struttura tabella notes per il database:
 ![tabella notes SQL](https://github.com/PaulXV/Ricordella/assets/113890106/9bd5b5fe-d6f0-42bd-becd-032fa0af65b5)
 
 
-Struttura tabella users per il database:
+### Struttura tabella users per il database:
 ![tabella users SQL](https://github.com/PaulXV/Ricordella/assets/113890106/7f5aa5b4-6733-422f-8b3b-11ad744fadbe)
+
+
+## Other Apps
+Other Web Apps [here](https://github.com/stars/PaulXV/lists/web-dev)!
