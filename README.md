@@ -25,5 +25,6 @@ archiviazione, per priorità,...
 ![tabella users SQL](https://github.com/PaulXV/Ricordella/assets/113890106/7f5aa5b4-6733-422f-8b3b-11ad744fadbe)
 
 
-## Other Apps
-Other Web Apps [here](https://github.com/stars/PaulXV/lists/web-dev)!
+## See also: 
+- Web Apps [here](https://github.com/stars/PaulXV/lists/web-dev)!
+- Flutter apps [here](https://github.com/stars/PaulXV/lists/flutter)!
